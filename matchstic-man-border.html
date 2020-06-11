@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: rgb(215,215,215);
+        }
+        .screen-1{
+            position:fixed;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            margin:auto;
+            width: 800px;
+            height: 600px;
+            background-color: rgb(215,215,215);
+        }
+        .player-1{
+            width: 70px;
+            height: 100px;
+            position:absolute;
+            bottom:0;
+            left:0;
+            transform-origin:30% center;
+            transform: rotateY(0deg);
+            animation:player-move-stat1 2s linear forwards,
+                        player-break-cage 0.1s 7s 10 linear forwards,
+                        player-died 0.3s 14s linear forwards;
+        }
+        @keyframes player-died {
+            from{
+
+            }
+            to{
+                bottom:-200px;
+                left:-400px;
+            }
+        }
+        @keyframes player-break-cage {
+            from{
+                transform: rotateY(0deg);
+            }
+            to{
+                transform: rotateY(360deg);
+            }
+            
+        }
+        @keyframes player-move-stat1{
+            from{
+                left:0px;
+            }
+            to{
+                left:50px;
+            }
+        }
+
+        .player-1>div{
+            border-right:5px solid black;
+        }
+        .head{
+            position:absolute;
+            width: 30px;
+            height: 30px;
+            border:3px solid black;
+            border-radius: 50%;
+        }
+        .body{
+            position:absolute;
+            height: 30px;
+            top:33px;
+            left:15px;
+        }
+        .hand{
+            position:absolute;
+            top:20px;
+            left:-17px;
+            height: 30px;
+            width: 30px;
+            transform-origin: bottom right;
+        }
+        .left-hand{
+            border-radius: 30%/50%;
+            transform:rotate(60deg) rotateX(0deg);
+            animation:ready 1s 4s forwards linear,
+                    rotate-stick 1s 6s forwards,
+                    hand-protect 1s 10s linear forwards;
+        }
+        @keyframes hand-protect {
+            from{
+                transform: rotate(80deg) rotateX(180deg);           
+            }
+            to{
+                transform:rotate(60deg);
+            }
+        }
+        @keyframes rotate-stick{
+            from{
+                transform: rotate(60deg) rotateX(180deg);
+            }
+            to{
+                transform: rotate(80deg) rotateX(180deg);
+            }
+        }
+        @keyframes ready {
+            from{
+                transform:rotate(60deg) rotateX(0deg)
+            }
+            to{
+                transform: rotate(60deg) rotateX(180deg)
+            }
+        }
+        .right-hand{
+            border-radius: 30%/50%;
+            transform:rotate(80deg);
+        }
+        
+        .feet{
+            position:absolute;
+            height:35px;
+            left:15px;
+            top:60px;
+            transform-origin: top right;
+        }
+        .right-feet{
+            transform: rotate(5deg);
+            animation:right-feet-run 2s  linear alternate;
+        }
+        @keyframes right-feet-run{
+            from{
+                transform: rotate(8deg);
+            }
+            to{
+                transform: rotate(-16deg);
+            }
+        }
+        .left-feet{
+            transform: rotate(-16deg);
+            animation: left-feet-run 2s  linear alternate;
+        }
+        @keyframes left-feet-run{
+            from{
+                transform: rotate(-16deg);
+            }
+            to{
+                transform: rotate(8deg);
+            }
+        }
+        .text-1{
+            opacity: 0;
+            position:absolute;
+            bottom:100px;
+            left:50px;
+            font-size: 20px;
+            font-weight: bold;
+            
+            animation:text-gone 2s 2s ease-out; 
+        }
+        @keyframes text-gone{
+            10%{
+                opacity:0
+                
+            }
+            100%{
+                opacity:1;
+            }
+        }
+        .danger-box{
+            opacity: 0;
+            display:block;
+            position: absolute;
+            top:0;
+            border:4px solid red;
+            border-bottom-color:transparent ;
+            width:120px;
+            height:150px;
+            animation:drop-down 1s 2s ease-in forwards,
+                    stick-show-out 2s 7s steps(5) forwards,
+                    disappear 0s 9s forwards;
+        }
+        @keyframes disappear {
+            from{
+                border-color:rgba( 0 ,0,0,0)
+            }
+            to{
+                border-color:rgba( 0 ,0,0,0)
+            }
+        }
+    
+        @keyframes drop-down{
+            10%{
+                top:0;
+                opacity: 0;
+            }
+            100%{
+                opacity:1;
+                top:450px;
+            }
+        }
+        .stick{
+            opacity: 0;
+            
+            position:absolute;
+            bottom:50px;
+            left:18px;
+            width: 100px;
+            border-bottom:6px solid yellowgreen;
+            transform-origin: bottom;
+            transform: rotate(-27deg) rotateY(0deg);
+            animation: stick-show-out 1s 5s steps(5) forwards,
+                        stick-ready 1s 6s forwards,
+                        break-cage-stick 0.1s 7s 10 linear forwards,
+                        stick-protect 1s 10s linear forwards,
+                        stick-away 0.3s 14s linear forwards;
+        }
+        @keyframes stick-away {
+            from{
+                transform: rotate(60deg);
+                left:50px;
+            }
+            to{
+                bottom:-250px;
+                left:-400px;
+            }
+        }
+        @keyframes stick-protect{
+            from{
+                transform: rotate(-7deg) rotateY(360deg);
+                left:18px;
+            }
+            to{
+                transform: rotate(60deg);
+                left:50px;
+            }
+        }
+        @keyframes break-cage-stick{
+            from{
+                transform: rotate(-7deg) rotateY(0deg);
+            }
+            to{
+                transform: rotate(-7deg) rotateY(360deg);
+            }
+        }
+        @keyframes stick-ready{
+            from{
+                transform:rotate(-27deg);
+            }
+            to{
+                transform:rotate(-7deg);
+            }
+        }
+        @keyframes stick-show-out {
+            0%{
+                opacity: 0;
+            }
+            20%{
+                opacity: 1;
+            }
+            40%{
+                opacity:0;
+            }
+            60%{
+                opacity:1;
+            }
+            80%{
+                opacity:0
+            }
+            100%{
+                opacity:1;
+            }
+        }
+        .top{
+            opacity: 0;
+            position:absolute;
+            top:0;
+            width: 120px;
+            border-top:red dashed 3px;
+            animation: top-drop-to-floor 1s 9s linear forwards;
+        }
+        @keyframes top-drop-to-floor {
+            10%{
+                top:0;
+                opacity:0;
+            }
+            100%{
+                top:150px;
+                opacity:1;
+            }
+        }
+        .left{
+            opacity:0;
+            position:absolute;
+            height: 150px;
+            border-left:red dashed 3px;
+            animation: left-drop-to-floor 1s 9s linear forwards;
+        }
+        @keyframes left-drop-to-floor {
+            10%{
+                opacity:0;
+                top:0;
+                transform: rotate(0deg);
+            }
+            100%{
+                opacity:1;
+                top:73px;
+                transform: rotate(93deg);
+            }
+        }
+        .right{
+            opacity: 0;
+            position:absolute;
+            right:0;
+            height: 150px;
+            border-right:red dashed 3px;
+            animation: right-drop-to-floor 1s 9s linear forwards;
+        }
+        @keyframes right-drop-to-floor {
+            10%{
+                opacity:0;
+                top:0;
+                transform: rotate(0deg);
+            }
+            100%{
+                opacity:1;
+                top:72px;
+                transform: rotate(-87deg);
+            }
+        }
+        .sharp{
+            position: absolute;
+            width: 0;
+            height: 0;
+            opacity:0;
+            right:50px;
+            border: 20px solid transparent;
+            border-right-color: black;
+            border-right-width:50px;
+            transform:rotate(-35deg);
+        }
+        .sharp1{
+           
+            top:30px;
+            transform:rotate(-40deg);
+            animation:shot 1s 10s ease-in forwards;
+        }
+        .sharp2{
+            top:80px;
+            transform:rotate(-33deg);
+            animation:shot2 1s 10s ease-in forwards;
+        }
+        @keyframes shot2{
+            from{
+                opacity: 0;
+               
+                top:30px;
+                right:50px;
+            }
+            to{
+                opacity:1;
+                right: 625px;
+                top:472px;
+                
+            }
+        }
+        .sharp3{
+            top:130px;
+            transform:rotate(-29deg);
+            animation:shot3 3s 11s ease-in forwards,
+            first-blood 0.3s 14s linear forwards;
+        }
+        @keyframes first-blood{
+            from{
+                opacity:1;
+                right: 600px;
+                top:472px;
+            }
+            to{
+                right:1200px;
+                top:1000px;
+            }
+        } 
+        @keyframes shot3{
+            from{
+                opacity: 0;
+                border: 20px solid transparent;
+                border-right-color: black;
+                border-right-width:50px;
+                top:30px;
+                right:50px;
+            }
+            to{
+                opacity:1;
+                right: 600px;
+                top:472px;
+                border: 70px solid transparent;
+                border-right-color: black;
+                border-right-width:140px;
+            }
+        }
+        @keyframes shot{
+            from{
+                opacity: 0;
+                top:30px;
+                right:50px;
+            }
+            to{
+                opacity:1;
+                right: 660px;
+                top:500px;
+            }
+        }
+        .game-over{
+            opacity:0;
+            font-size: 100px;
+            width: 600px;
+            animation: lose 2s 14.5s linear forwards;
+        }
+        @keyframes lose {
+            from{
+                opacity:0;
+                color:white;
+            }
+            to{
+                opacity:1;
+                color:black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="screen-1">
+        <div class="player-1">
+            <div class="head"></div>
+            <div class="body"></div>
+            <div class="left-hand hand"></div>
+            <div class="right-hand hand"></div>
+            <div class="left-feet feet">
+                <!-- <div class="knee-upper-L"></div>
+                <div class="knee-bot-L"></div> -->
+            </div>
+            <div class="right-feet feet">
+                <!-- <div class="knee-upper-L"></div>
+                <div class="knee-bot-L"></div> -->
+            </div>
+        </div>
+        <div class="text-1">!!!</div>
+        <div class="danger-box">
+            <div class="top"></div>
+            <div class="left"></div>
+            <div class="right"></div>    
+        </div>
+        <div class="stick"></div>
+        <div class="sharp1 sharp"></div>
+        <div class="sharp2 sharp"></div>
+        <div class="sharp3 sharp"></div>
+        <div class="game-over"> Game Over Loser</div>
+    </div>
+</body>
+</html>
